@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Whisper Voice Log</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="settings-panel">
+        <div class="brand">
+          <div class="brand-mark">W</div>
+          <div>
+            <h1>Whisper Voice Log</h1>
+            <p>Local transcription workspace</p>
+          </div>
+        </div>
+
+        <form id="settingsForm" class="settings-form">
+          <label>
+            Model
+            <select name="model" id="modelSelect">
+              <option value="small" selected>small</option>
+              <option value="medium">medium</option>
+              <option value="large-v3">large-v3</option>
+              <option value="base">base</option>
+              <option value="tiny">tiny</option>
+            </select>
+          </label>
+
+          <label>
+            Language
+            <input name="language" placeholder="auto, en, sv..." />
+          </label>
+
+          <div class="toggle-row">
+            <span>High accuracy</span>
+            <label class="switch">
+              <input id="accuracyToggle" type="checkbox" />
+              <span></span>
+            </label>
+          </div>
+
+          <div class="toggle-row">
+            <span>Translate to English</span>
+            <label class="switch">
+              <input name="translate" type="checkbox" />
+              <span></span>
+            </label>
+          </div>
+
+          <div class="toggle-row">
+            <span>Skip dead air</span>
+            <label class="switch">
+              <input name="vad" type="checkbox" checked />
+              <span></span>
+            </label>
+          </div>
+
+          <label>
+            Device
+            <select name="device">
+              <option value="cpu" selected>cpu</option>
+              <option value="cuda">cuda</option>
+              <option value="auto">auto</option>
+            </select>
+          </label>
+
+          <div class="field-grid">
+            <label>
+              Beam
+              <input name="beamSize" type="number" min="1" max="12" value="5" />
+            </label>
+            <label>
+              Gap sec
+              <input name="noteGapSeconds" type="number" min="5" max="300" value="30" />
+            </label>
+          </div>
+        </form>
+      </aside>
+
+      <section class="workspace">
+        <header class="topbar">
+          <div>
+            <h2>Voice notes</h2>
+            <p id="statusLine">Ready</p>
+          </div>
+          <div class="topbar-actions">
+            <button id="refreshButton" class="ghost-button" type="button">Refresh</button>
+            <a class="ghost-button" href="/static/index.html" aria-label="Reload">Reload</a>
+          </div>
+        </header>
+
+        <section class="capture-grid">
+          <div class="drop-zone" id="dropZone">
+            <input id="fileInput" type="file" multiple accept="audio/*,video/*,.mkv,.webm,.mp4,.mov,.m4a,.wav,.mp3,.opus,.ogg,.flac" />
+            <div class="drop-icon">+</div>
+            <h3>Drop audio or video</h3>
+            <p>Choose files</p>
+            <button id="chooseButton" class="primary-button" type="button">Browse</button>
+          </div>
+
+          <div class="recorder">
+            <div class="recorder-head">
+              <div>
+                <h3>Record</h3>
+                <p id="recordTimer">00:00</p>
+              </div>
+              <div id="recordDot" class="record-dot"></div>
+            </div>
+            <div class="meter">
+              <span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <div class="recorder-actions">
+              <button id="recordButton" class="danger-button" type="button">Start</button>
+              <button id="stopButton" class="ghost-button" type="button" disabled>Stop</button>
+            </div>
+          </div>
+        </section>
+
+        <section id="uploadPanel" class="upload-panel hidden">
+          <div class="section-title compact-title">
+            <h3>Uploads</h3>
+            <span id="uploadCount">0</span>
+          </div>
+          <div id="uploadList" class="upload-list"></div>
+        </section>
+
+        <section class="content-grid">
+          <section class="jobs-panel">
+            <div class="section-title">
+              <h3>Jobs</h3>
+              <span id="jobCount">0</span>
+            </div>
+            <div id="jobsList" class="jobs-list"></div>
+          </section>
+
+          <section class="preview-panel">
+            <div class="section-title">
+              <h3>Transcript preview</h3>
+              <div class="preview-actions">
+                <button id="openOutputButton" class="ghost-button" type="button" disabled>Open output</button>
+                <button id="copyButton" class="ghost-button" type="button" disabled>Copy</button>
+              </div>
+            </div>
+            <pre id="previewText">No transcript selected.</pre>
+          </section>
+        </section>
+      </section>
+    </main>
+    <script src="/static/app.js"></script>
+  </body>
+</html>

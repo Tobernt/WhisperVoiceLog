@@ -1,0 +1,30 @@
+.venv/
+__pycache__/
+*.pyc
+outputs/
+*.log
+
+
+# Uploaded audio and browser recordings stay local.
+recordings/
+uploads/
+web-*.png
+
+# Local credentials and configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+secrets.json
+
+# Build and editor output
+dist/
+build/
+*.egg-info/
+.pytest_cache/
+.vscode/
+.idea/

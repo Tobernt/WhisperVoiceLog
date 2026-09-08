@@ -1,0 +1,27 @@
+[project]
+name = "whisper-voice-log"
+version = "0.1.0"
+description = "Local Whisper transcription tool for long audio/video voice-note logs."
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
+dependencies = [
+  "faster-whisper>=1.0.0",
+  "fastapi>=0.115.0",
+  "uvicorn[standard]>=0.32.0",
+  "python-multipart>=0.0.12",
+]
+
+[project.optional-dependencies]
+cuda = [
+  "nvidia-cublas-cu12>=12.0",
+  "nvidia-cuda-runtime-cu12>=12.0",
+  "nvidia-cudnn-cu12>=9.0",
+]
+
+[project.scripts]
+whisper-voice-log = "whisper_voice_log.cli:main"
+whisper-voice-log-web = "whisper_voice_log.web:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
